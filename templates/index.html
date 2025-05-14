@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container text-center shadow p-4 rounded">
+    <h1 class="mb-4">Password Generator</h1>
+
+    <!-- Options -->
+    <form action="/generate" method="post">
+        <!-- Password Length -->
+        <div class="mb-3">
+            <label for="passwordLength" class="form-label">Password Length</label>
+            <input type="range" class="form-range" id="passwordLength" name="passwordLength" min="8" max="99" value="8">
+            <div id="passwordLengthDisplay" class="fw-bold">Length: 8</div>
+        </div>
+
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="includeNumbers" name="include_numbers">
+            <label class="form-check-label" for="includeNumbers">Include Numbers</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="includeUppercase" name="include_uppercase">
+            <label class="form-check-label" for="includeUppercase">Include Uppercase</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="includeLowercase" name="include_lowercase">
+            <label class="form-check-label" for="includeLowercase">Include Lowercase</label>
+        </div>
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="includeSpecial" name="include_special">
+            <label class="form-check-label" for="includeSpecial">Include Special Characters</label>
+        </div>
+
+        <!-- Generate Password Button -->
+        <button type="submit" class="btn btn-primary mb-4">Generate Password</button>
+    </form>
+
+    <!-- Display Generated Password -->
+    {% if password %}
+    <div id="generatedPassword" class="alert alert-secondary" role="alert">{{ password }}</div>
+    {% else %}
+    <div id="generated-Password" class="alert alert-secondary" role="alert">Your password will appear here</div>
+    {% endif %}
+</div>
+
+<script>
+    const passwordLength = document.getElementById('passwordLength');
+    const passwordLengthDisplay = document.getElementById('passwordLengthDisplay');
+
+    passwordLength.addEventListener('input', () => {
+        passwordLengthDisplay.textContent = `Length: ${passwordLength.value}`;
+    });
+</script>
+{% endblock %}
